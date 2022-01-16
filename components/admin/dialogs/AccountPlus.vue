@@ -305,6 +305,10 @@ export default {
               student.point,
               this.teachers.map((obj) => obj.id)
             )
+            if (typeof student.id === 'number') {
+              const studentId = student.id.toString()
+              student.id = studentId
+            }
             if (student.rank == null) {
               student.rank = 0
             }
@@ -341,10 +345,10 @@ export default {
       if (!this.validate) {
         const createUser = httpsCallable(functions, 'createUserToAuthAndDB')
         const student = {
-          id: this.manualForm.id,
+          id: this.manualForm.id.toString(),
           name: this.manualForm.name,
-          rank: this.manualForm.rank,
-          group: this.manualForm.group,
+          rank: Number(this.manualForm.rank),
+          group: Number(this.manualForm.group),
           email: this.manualForm.email,
           status: 'test',
           isActive: true,

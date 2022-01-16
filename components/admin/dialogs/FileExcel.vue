@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>Excelファイルを出力</v-card-title>
     <v-container>
-      <v-subheader>出力する学生の年度</v-subheader>
+      <v-subheader>出力する学生の年度を選択してください</v-subheader>
       <v-form class="form__wrap">
         <v-select v-model="year" label="年度" :items="years" color="accent" />
       </v-form>

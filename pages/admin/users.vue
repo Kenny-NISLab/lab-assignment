@@ -101,7 +101,6 @@ export default {
         {
           text: 'メールアドレス',
           sortable: false,
-          filterable: false,
           value: 'email',
         },
         {
