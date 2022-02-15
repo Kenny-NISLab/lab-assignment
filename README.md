@@ -15,6 +15,7 @@
 <div align="center">
 <a href="https://github.com/RyoichiNakai"><img src="https://avatars.githubusercontent.com/u/49640294?v=4" alt="RyoichiNakai" height="120px"></a>
 <a href="https://github.com/Riki-Okunishi"><img src="https://avatars.githubusercontent.com/u/49511161?v=4" alt="Ricky" height="120px"></a>
+<a href="https://github.com/ss1119"><img src="https://avatars.githubusercontent.com/u/67626951?v=4" alt="ss1119" height="120px"></a>
 </div>
 
 ## <p align="center">Architecture</p>
@@ -27,13 +28,13 @@
 
 ### 使用したパッケージとそのバージョン
 
-|  パッケージ  |  バージョン  |
-| ---- | ---- |
-|  `yarn`  |  1.22.10  |
-|  `node`  |  v12.22.7 |
-|  `firebase`  |  9.6.1  |
+| パッケージ | バージョン |
+| ---------- | ---------- |
+| `yarn`     | 1.22.10    |
+| `node`     | v12.22.7   |
+| `firebase` | 9.6.1      |
 
-> `firebase`に関しては，8系と9系でコードの書き方が大きく異なるので，注意すること
+> `firebase`に関しては，8 系と 9 系でコードの書き方が大きく異なるので，注意すること
 
 ### 事前に入れておいてほしいもの
 
@@ -41,13 +42,13 @@
   - インストールしていない方は[こちら](https://brew.sh/index_ja)から
 - git
 
-### Nodeのインストール
+### Node のインストール
 
-#### 1. Homebrewからnodebrewをインストール
+#### 1. Homebrew から nodebrew をインストール
 
-- こちらは必須ではないが，Nodeのパッケージ管理が楽になるのでおすすめ
-- 直接NodeをインストールしてもOK
-- すでにNodeが入っている場合は削除すること
+- こちらは必須ではないが，Node のパッケージ管理が楽になるのでおすすめ
+- 直接 Node をインストールしても OK
+- すでに Node が入っている場合は削除すること
 
 ```bash
 # Nodeが入っているかを確認
@@ -67,7 +68,7 @@ nodebrew -v
 ```
 
 - 環境変数を追加する
-  - bashを使っている方は，`zshrc`の部分を`bash_profile`に変更
+  - bash を使っている方は，`zshrc`の部分を`bash_profile`に変更
 
 ```bash
 # zshrcを開く
@@ -88,17 +89,17 @@ source ~/.zshrc
 ```
 
 - 最後にセットアップして完了
-  - **これをやらないと，nodebrewが使えない**
+  - **これをやらないと，nodebrew が使えない**
 
 ```bash
 # セットアップ
 nodebrew setup
 ```
 
-#### 2. nodebrewからNodeをインストール
+#### 2. nodebrew から Node をインストール
 
-- 今回の開発ではNode 12系を使用しているので，こちらをインストール
-  - 12系であれば，どのバージョンでもOK
+- 今回の開発では Node 12 系を使用しているので，こちらをインストール
+  - 12 系であれば，どのバージョンでも OK
 
 ```bash
 # nodebrewでインストールできるNodeのバージョンを確認
@@ -118,12 +119,12 @@ node -v
 npm -v
 ```
 
-### yarnのインスール
+### yarn のインスール
 
 - 今回の開発では，`npm`ではなく，`yarn`でパッケージ管理を行った
-- npmとyarnの違いは[こちら](https://qiita.com/Hai-dozo/items/90b852ac29b79a7ea02b)から
+- npm と yarn の違いは[こちら](https://qiita.com/Hai-dozo/items/90b852ac29b79a7ea02b)から
 
-> Cloud Functionsでは，`npm`を使用しているが，  
+> Cloud Functions では，`npm`を使用しているが，  
 > パッケージをインストールしなくていいので，基本的に`npm`は使用しない
 
 ```bash
@@ -134,10 +135,10 @@ npm install -g yarn
 yarn -v
 ```
 
-### Firebase Toolsのインストール
+### Firebase Tools のインストール
 
-- Firebaseを使用した開発ではほぼ必須のCLIなので，こちらもインストール
-- このパッケージをインストールすると，Firebaseの操作用コマンドが使用できる
+- Firebase を使用した開発ではほぼ必須の CLI なので，こちらもインストール
+- このパッケージをインストールすると，Firebase の操作用コマンドが使用できる
 
 ```bash
 npm install -g firebase-tools
@@ -167,7 +168,7 @@ yarn install
 
 - プロジェクトのルートディレクトリに`.env`の作成
   - `.env`は環境変数用のファイル
-  - gitにて管理を行いたくない情報を管理している
+  - git にて管理を行いたくない情報を管理している
   - **`.env`は先輩から引き継ぐようにしてください**
 
 ```bash
@@ -189,8 +190,8 @@ ADMIN_SUB_URL='xxxx'
 CRYPT_JS_PASSPHRASE='xxxx'
 ```
 
-- 開発環境のFirebaseプロジェクトの選択
-  - Firebaseのプロジェクトに関しては，後述
+- 開発環境の Firebase プロジェクトの選択
+  - Firebase のプロジェクトに関しては，後述
 
 ```bash
 # Firebaseにログイン
@@ -218,23 +219,23 @@ control + C
 
 ---
 
-## Firebaseプロジェクトの管理
+## Firebase プロジェクトの管理
 
-### Firebaseとは?
+### Firebase とは?
 
-- Googleが提供しているモバイル・Webアプリケーション向けのプラットフォーム
-- 全ての機能がGoogleのインフラ技術に支えられており、簡単にアプリケーションの開発を行うことができる
+- Google が提供しているモバイル・Web アプリケーション向けのプラットフォーム
+- 全ての機能が Google のインフラ技術に支えられており、簡単にアプリケーションの開発を行うことができる
 
 ### プロジェクトの管理
 
 - Firebase コンソール：<https://console.firebase.google.com/>
-- `nislab.root@gmail.com`のアカウントでGoogleにログインを行えば，操作可能
+- `nislab.root@gmail.com`のアカウントで Google にログインを行えば，操作可能
   - 操作する場合は，ネットワーク班の担当者から共有してもらうこと
 
-|  環境名  |  プロジェクト名  |  URL  |  備考  |
-| ---- | ---- | ---- | ---- |
-|  本番環境  |  lab-assignment-prod  | ・https://assign.nislab.io <br/> ・https://lab-assignment-prod.web.app  |  B3の学生がデータを入力する際に使用  |
-|  開発環境  |  lab-assignment-dev  |  https://lab-assignment-dev.web.app  |  ローカルホストと開発環境用に使用 |
+| 環境名   | プロジェクト名      | URL                                                                    | 備考                                |
+| -------- | ------------------- | ---------------------------------------------------------------------- | ----------------------------------- |
+| 本番環境 | lab-assignment-prod | ・https://assign.nislab.io <br/> ・https://lab-assignment-prod.web.app | B3 の学生がデータを入力する際に使用 |
+| 開発環境 | lab-assignment-dev  | https://lab-assignment-dev.web.app                                     | ローカルホストと開発環境用に使用    |
 
 ### 今回使用したサービスの説明
 
@@ -245,8 +246,8 @@ control + C
 
 #### [Firestore](https://firebase.google.com/docs/firestore?hl=ja)
 
-- Firebaseにおけるデータベース用のサービス
-- NoSQLであり，コレクションとドキュメントという概念でDBを管理
+- Firebase におけるデータベース用のサービス
+- NoSQL であり，コレクションとドキュメントという概念で DB を管理
 - インデックスやセキュリティルール(権限)の設定も可能
   - 詳しくは公式ドキュメントにて
 
@@ -254,15 +255,15 @@ control + C
 
 - 研究室配属希望調査のデプロイ先
 - デプロイは`Github Actions`が担当しているので，気にしなくて良い
-- URLの末尾スラッシュの設定をオフにしている
+- URL の末尾スラッシュの設定をオフにしている
   - 例：<https://assign.nislab.io/user>
 
 #### [Cloud Functions](https://firebase.google.com/docs/functions)
 
-- Firebaseで使用されるサーバレスのバックエンドフレームワーク
-- クライアントからHTTPリクエストを呼ぶことで，呼び出すことが可能
+- Firebase で使用されるサーバレスのバックエンドフレームワーク
+- クライアントから HTTP リクエストを呼ぶことで，呼び出すことが可能
 - 主にメールの送信と，ユーザの作成・削除にて使用
-- **Cloud Functiosのみデプロイの仕方が違うので，注意**
+- **Cloud Functios のみデプロイの仕方が違うので，注意**
 
 ```bash
 # デプロイ先のプロジェクトを選択（本番環境であれば，lab-assignment-prod）
@@ -276,34 +277,34 @@ firebase deploy --only functions
 
 ## 研究室配属希望調査の開発
 
-### Nuxt.jsについて
+### Nuxt.js について
 
-- Vue.jsのフレームワーク
-  - Vue.jsは[ライフサイクル](https://jp.vuejs.org/v2/guide/instance.html#%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB%E3%83%80%E3%82%A4%E3%82%A2%E3%82%B0%E3%83%A9%E3%83%A0)の考え方が開発をする上で，非常に重要なので理解をすること
-- 基本的には，Vue.jsと同じだが，一部Nuxt.jsの方が使いやすくなっているイメージ
+- Vue.js のフレームワーク
+  - Vue.js は[ライフサイクル](https://jp.vuejs.org/v2/guide/instance.html#%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB%E3%83%80%E3%82%A4%E3%82%A2%E3%82%B0%E3%83%A9%E3%83%A0)の考え方が開発をする上で，非常に重要なので理解をすること
+- 基本的には，Vue.js と同じだが，一部 Nuxt.js の方が使いやすくなっているイメージ
 - 今回は`SPA(Single Page Application)`にて開発を行なった
 
-### UIフレームワーク
+### UI フレームワーク
 
 - 本開発では，**Vuetify**を使用
   - [公式ドキュメント](https://vuetifyjs.com/ja/getting-started/installation/)
-  - Vue.jsのマテリアルデザインのコンポーネントを提供
+  - Vue.js のマテリアルデザインのコンポーネントを提供
 - よく使用したコンポーネント
   - [v-card](https://vuetifyjs.com/ja/components/cards/)
   - [v-data-table](https://vuetifyjs.com/ja/components/data-tables/#footer-props)
 
-### URL構造
+### URL 構造
 
-- URL構造は`pages`のディレクトリ構造と一致しているため，編集したいページのコードは対応するファイルから探すようにすること
+- URL 構造は`pages`のディレクトリ構造と一致しているため，編集したいページのコードは対応するファイルから探すようにすること
 
-|  URL  |  備考  |
-| ---- | ---- |
-|  /  |  トップとログインページ  |
-|  /form  |  学生が問い合わせを行うページ  |
-|  /user  |  各学生の研究室の得点や進路希望の調査結果を表示するページ  |
-|  /user/edit  |  各学生の研究室の得点や進路希望を編集するページ  |
-|  /admin/users  |  管理者画面・学生のデータを管理するページ  |
-|  /admin/teachers  |  管理者画面・教授のデータを管理するページ  |
+| URL             | 備考                                                     |
+| --------------- | -------------------------------------------------------- |
+| /               | トップとログインページ                                   |
+| /form           | 学生が問い合わせを行うページ                             |
+| /user           | 各学生の研究室の得点や進路希望の調査結果を表示するページ |
+| /user/edit      | 各学生の研究室の得点や進路希望を編集するページ           |
+| /admin/users    | 管理者画面・学生のデータを管理するページ                 |
+| /admin/teachers | 管理者画面・教授のデータを管理するページ                 |
 
 ### ディレクトリ構造
 
@@ -315,7 +316,7 @@ firebase deploy --only functions
 │   ├── card             # カードの汎用コンポーネント
 │   └── layouts          # 汎用コンポーネント
 ├── firebase.json        # Firebase Hostingの設定を行う
-├── firestore.rules      # Firestoreのセキュリティルールを設定 
+├── firestore.rules      # Firestoreのセキュリティルールを設定
 ├── functions
 │   ├── index.js         # Cloud Functionsのソースコード
 ├── layouts              # レイアウトの表示
@@ -330,16 +331,16 @@ firebase deploy --only functions
 │   │   └── users.vue    # /admin/users
 │   ├── form.vue         # /form
 │   ├── index.vue        # /
-│   └── user             
+│   └── user
 │       ├── edit.vue     # /user/edit
-│       └── index.vue    # /user 
+│       └── index.vue    # /user
 ├── plugins
 │   ├── firebase.js      # Firebaseの初期化
 │   └── utils.js         # 汎用関数の設定
 ├── static               # ファビコンの設定等
 ├── store
 │   ├── auth.js          # 認証情報の状態を管理
-│   ├── drawer.js       
+│   ├── drawer.js
 │   ├── excel.js
 │   ├── menu.js
 │   ├── teachers.js      # 教授データの状態を管理
@@ -348,93 +349,93 @@ firebase deploy --only functions
 
 ```
 
-- Nuxt.jsのディレクトリ構造の詳細は[こちら](https://nuxtjs.org/ja/docs/get-started/directory-structure)を参照すること
+- Nuxt.js のディレクトリ構造の詳細は[こちら](https://nuxtjs.org/ja/docs/get-started/directory-structure)を参照すること
 - ページロード時の実行順番
   - `plugins` → `middlewares` → `layouts` → `pages` → `components`
 - `Vuex`について
-  - Vue.jsの状態管理ライブラリ
+  - Vue.js の状態管理ライブラリ
     - 詳細は[こちら](https://vuex.vuejs.org/ja/)
   - `store`ディレクトリに，状態管理を行うためのファイルを格納
 
-### Firestoreのコレクション設計
+### Firestore のコレクション設計
 
-作成したテーブルは以下の2つ
+作成したテーブルは以下の 2 つ
 
 <details>
   <summary>users</summary>
 
-  ```json
-  "users": {
-    "docmentID": {
-      "id": "1316200127",
-      "name": "中井",
-      "mail": "ctwf0127@mail4.doshisha.ac.jp",
-      "password": "pass",
-      "status": "test",
-      "isActive": true,
-      "isPointAssigned": false,
-      "group": 1,
-      "rank": 39,
-      "isGraduate": true,
-      "point": {
-        "ksato": "3",
-        "tkoita": "1",
-        ...
-      },
-      "year": "2022",
+```json
+"users": {
+  "docmentID": {
+    "id": "1316200127",
+    "name": "中井",
+    "mail": "ctwf0127@mail4.doshisha.ac.jp",
+    "password": "pass",
+    "status": "test",
+    "isActive": true,
+    "isPointAssigned": false,
+    "group": 1,
+    "rank": 39,
+    "isGraduate": true,
+    "point": {
+      "ksato": "3",
+      "tkoita": "1",
+      ...
     },
-    "docmentID": {
-      "id": "1316200149",
-      "name": "田中",
-      "mail": "ctwf0149@mail4.doshisha.ac.jp",
-      "password": "pass",
-      "status": "prod",
-      "isActive": true,
-      "isPointAssigned": false,
-      "group": 1,
-      "rank": 1,
-      "isGraduate": true,
-      "point": {
-        "ksato": "3",
-        "tkoita": "1",
-        ...
-      },
-      "year": "2022",
+    "year": "2022",
+  },
+  "docmentID": {
+    "id": "1316200149",
+    "name": "田中",
+    "mail": "ctwf0149@mail4.doshisha.ac.jp",
+    "password": "pass",
+    "status": "prod",
+    "isActive": true,
+    "isPointAssigned": false,
+    "group": 1,
+    "rank": 1,
+    "isGraduate": true,
+    "point": {
+      "ksato": "3",
+      "tkoita": "1",
+      ...
     },
-    ...
-  }
-  ```
+    "year": "2022",
+  },
+  ...
+}
+```
 
 </details>
 <details>
   <summary>teachers</summary>
 
-  ```json
-  "teachers": {
-    "docmentID": {
-      "id": "ksato",
-      "name": "佐藤 健哉",
-      "lab": "ネットワーク情報システム研究室",
-    },
-    "docmentID": {
-      "id": "tkoita",
-      "name": "小板 隆浩",
-      "lab": "ネットワーク情報システム研究室",
-    },
-    ...
-  }
-  ```
+```json
+"teachers": {
+  "docmentID": {
+    "id": "ksato",
+    "name": "佐藤 健哉",
+    "lab": "ネットワーク情報システム研究室",
+  },
+  "docmentID": {
+    "id": "tkoita",
+    "name": "小板 隆浩",
+    "lab": "ネットワーク情報システム研究室",
+  },
+  ...
+}
+```
 
 </details>
 
 <br />
 
-> documentIDはFirebaseにデータを追加した際，自動的に付与されるID  
-> teachersの`id`に関しては，運用ルール(Notion参照)に従って保存すること
+> documentID は Firebase にデータを追加した際，自動的に付与される ID  
+> teachers の`id`に関しては，運用ルール(Notion 参照)に従って保存すること
 
 ---
 
-## gitの操作
+## git の操作
 
 ### 運用図
 
@@ -457,13 +458,13 @@ firebase deploy --only functions
 
 - 開発者がコードの修正・追加を行うブランチ
 - **必ず`develop`ブランチから切るようにすること**
-- PRを投げる際に，`develop`に向けるように注意すること
+- PR を投げる際に，`develop`に向けるように注意すること
   - デフォルトは`main`のため
-- チケット番号はIssueの番号を参照にすること
+- チケット番号は Issue の番号を参照にすること
 
 ### 開発時の流れ
 
-#### 1. `main`ブランチにて，pullを行い最新のリポジトリを取得
+#### 1. `main`ブランチにて，pull を行い最新のリポジトリを取得
 
 ```bash
 # mainにチェックアウト
@@ -473,7 +474,7 @@ git checkout main
 git pull origin main
 ```
 
-#### 2. `develop`ブランチにて，pullを行い最新のリポジトリを取得
+#### 2. `develop`ブランチにて，pull を行い最新のリポジトリを取得
 
 ```bash
 # developにチェックアウト
@@ -492,7 +493,7 @@ git checkout -b feature/#(チケット番号)
 # 作業を開始
 ```
 
-#### 4. 作業が終了したら，作業内容をリモートリポジトリにpush
+#### 4. 作業が終了したら，作業内容をリモートリポジトリに push
 
 ```bash
 # 作業が終了した場合
@@ -501,20 +502,20 @@ git commit -m "#(チケット番号) 修正内容のコメントを記述"
 git push origin feature/#(チケット番号)
 ```
 
-#### 5. PRを投げる
+#### 5. PR を投げる
 
-- Githubの「Pull Request」にて，自身が開発を行なった`feature`ブランチから`develop`ブランチに向けて，PRを投げる
+- Github の「Pull Request」にて，自身が開発を行なった`feature`ブランチから`develop`ブランチに向けて，PR を投げる
 - その後，すぐに「Merge Pull Request」を押さないようにする
-  - Github Actionsが走るまで，ライムラグがあるため
-- Github Actionsが終われば，レビューとテストを実施
+  - Github Actions が走るまで，ライムラグがあるため
+- Github Actions が終われば，レビューとテストを実施
 - 問題がなければ，「Merge Pull Request」を押下し，`develop`にマージ
-- その後，Github Actionsが走り，開発環境にデプロイを行う
+- その後，Github Actions が走り，開発環境にデプロイを行う
 
 #### 6. 本番反映
 
-- Githubの「Pull Request」にて，`develop`ブランチから`main`ブランチに向けて，PRを投げる
+- Github の「Pull Request」にて，`develop`ブランチから`main`ブランチに向けて，PR を投げる
 - 問題がなければ，「Merge Pull Request」を押下し，`main`にマージ
-- その後，Github Actionsが走り，本番環境にデプロイを行う
+- その後，Github Actions が走り，本番環境にデプロイを行う
 
 ---
 
@@ -524,23 +525,26 @@ git push origin feature/#(チケット番号)
 
 ### 発火タイミングと詳細
 
-- `feature`ブランチへpushした際
+- `feature`ブランチへ push した際
+
   - ファイル名：`ci.yml`
   - 構文チェック
 
-- `develop`ブランチにPRを投げた際
+- `develop`ブランチに PR を投げた際
+
   - ファイル名：`deploy_on_dev_preview.yml`
   - プレビュー環境へのデプロイ
   - 成功すれば，以下のコメントが出力される
 
     ![image](https://user-images.githubusercontent.com/49640294/150668915-b1e81226-918f-40d8-bb8b-a1a2880b969d.png)
 
-- `develop`ブランチに投げたPRをクローズした際（マージした際）
+- `develop`ブランチに投げた PR をクローズした際（マージした際）
+
   - ファイル名：`deploy_on_dev.yml`
   - 開発環境へデプロイ
   - プレビュー環境の削除
 
-- `main`ブランチに投げたPRをクローズした際（マージした際）
+- `main`ブランチに投げた PR をクローズした際（マージした際）
   - ファイル名：`deploy_on_prod.yml`
   - 本番環境へデプロイ
 
