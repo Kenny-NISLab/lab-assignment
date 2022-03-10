@@ -203,6 +203,49 @@ exports.sendLoginDataBatch = functions.https.onCall(async (data, context) => {
   }
 })
 
+// 個人ユーザにログイン情報を記載したメールを送信する
+exports.sendPersonLoginDataBatch = functions.https.onCall(async (data, context) => {
+  const db = admin.firestore()
+  const messages = []
+
+  // ログイン権限があるユーザにのみ送信
+  for (let i = 0; i < data.ids.length; i++) {
+    const activeUserById = await db.collection('users').where('id', '==', data.ids[i]).where('isActive', '==', true).get()
+    activeUserById.forEach((user) => {
+      console.log(user.data())
+      // eslint-disable-next-line
+      const pass = decryptPassword(user.data().password)
+
+      let entry = ''
+      if (user.data().status === 'test') {
+        entry = '試行'
+      } else if (user.data().status === 'prod') {
+        entry = '本番'
+      }
+      const userData = {
+        email: user.data().email,
+        name: user.data().name,
+        status: entry,
+        password: pass,
+      }
+
+      messages.push({
+        to: user.data().email,
+        from: gmailEmail,
+        subject: '【研究室配属希望調査】ログイン情報について',
+        text: userLoginDataMail(userData),
+      })
+    })
+  }
+  // メール送信の実行
+  try {
+    await sgMail.send(messages)
+  } catch (err) {
+    // eslint-disable-next-line
+    console.log(err)
+  }
+})
+
 // Excelから認証情報を追加し、DBにユーザ情報を保存
 exports.createUserToAuthAndDB = functions.https.onCall(async (data, context) => {
   const db = admin.firestore()
