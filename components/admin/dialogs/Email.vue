@@ -31,18 +31,6 @@
           </v-form>
         </v-container>
 
-        <v-container>
-          <v-subheader>学生の入力期間を選択</v-subheader>
-          <v-menu ref="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="auto">
-            <template #activator="{ on, attrs }">
-              <v-form class="form__wrap">
-                <v-text-field v-model="dateRangeText" label="入力期間" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
-              </v-form>
-            </template>
-            <v-date-picker v-model="dates" range no-title @input="menu = false"> </v-date-picker>
-          </v-menu>
-        </v-container>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click.stop="close"> 閉じる </v-btn>
@@ -58,7 +46,6 @@
         <v-card-text>
           <p>
             {{ year }}年度の学生にログイン情報を送信します。<br />
-            学生の入力期間は{{ dateRangeText }}です。<br />
             実行する場合は、下記フォームに「{{ confirmLabel }}」と入力してください。
           </p>
           <p>ログインができるユーザに対して、メールが送信されます。</p>
@@ -100,23 +87,7 @@
         </v-container>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
           <v-btn text @click="addForm"> フォームを追加 </v-btn>
-        </v-card-actions>
-
-        <v-container>
-          <v-subheader>学生の入力期間を選択</v-subheader>
-          <v-menu ref="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="auto">
-            <template #activator="{ on, attrs }">
-              <v-form class="form__wrap">
-                <v-text-field v-model="dateRangeText" label="入力期間" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
-              </v-form>
-            </template>
-            <v-date-picker v-model="dates" range no-title @input="menu = false"> </v-date-picker>
-          </v-menu>
-        </v-container>
-
-        <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click.stop="close"> 閉じる </v-btn>
           <v-btn color="accent" text :disabled="manualConfirmDisabled" @click.stop="toManualConfirm"> 確認画面へ </v-btn>
@@ -133,7 +104,6 @@
             {{ manualSend.studentId[index] }}
           </div>
           の学生にログイン情報を送信します。<br />
-          学生の入力期間は{{ dateRangeText }}です。<br />
           実行する場合は、下記フォームに「{{ confirmLabel }}」と入力してください。
           <p>ログインができるユーザに対して、メールが送信されます。</p>
         </v-card-text>
@@ -175,8 +145,6 @@ export default {
       isOpen: false,
       year: '',
       value: '',
-      menu: false,
-      dates: [],
       loading: false,
       confirmDialog: false,
       confirmLabel: '確認しました',
@@ -201,9 +169,6 @@ export default {
     ...mapGetters({
       years: 'users/years',
     }),
-    dateRangeText() {
-      return this.dates.join(' ~ ')
-    },
     entireConfirmDisabled() {
       if (this.year === '') {
         return true
@@ -246,7 +211,6 @@ export default {
       this.year = ''
       this.isEntireSendDialogOpen = false
       this.isManualSendDialogOpen = false
-      this.dates = []
       this.resetForm()
     },
     toEntireConfirm() {
@@ -270,12 +234,7 @@ export default {
     sendEmails() {
       this.loading = true
       const sendEmails = httpsCallable(functions, 'sendLoginDataBatch')
-      const data = {
-        year: this.year,
-        begin: this.dates[0],
-        end: this.dates[1],
-      }
-      sendEmails(data).then(() => {
+      sendEmails(this.year).then(() => {
         this.loading = false
         this.closeConfirm()
       })
@@ -285,8 +244,6 @@ export default {
       const sendEmails = httpsCallable(functions, 'sendPersonLoginDataBatch')
       const students = {
         ids: this.manualSend.studentId,
-        begin: this.dates[0],
-        end: this.dates[1],
       }
       sendEmails(students).then(() => {
         this.loading = false

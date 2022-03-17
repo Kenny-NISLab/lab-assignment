@@ -70,10 +70,10 @@ ${data.message}
 const userInqueries = (data) => {
   return `${data.name}さん
 
-お問い合わせありがとうございます。
+お問合せありがとうございます。
 研究室希望配属調査管理チームでございます。
 
-以下、お問い合わせ内容となります。
+以下、問い合わせ内容となります。
 
 件名:
 ${data.subject}
@@ -103,25 +103,20 @@ const userLoginDataMail = (data) => {
   return `${data.name}さん
 
 研究室希望配属調査管理チームでございます。
-研究室配属希望調査のログイン情報を記載しておりますので、ご確認をお願い致します。
+研究室配属希望調査のログイン情報を記載していますので、ご確認をお願い致します。
 
 今回の目的: ${data.status}入力
 
 URL: ${url}
-希望調査期間: ${data.beginDate} ~ ${data.endDate}
 
 メールアドレス: ${data.email}
 パスワード: ${data.password}
 
-推奨ブラウザはGoogle Chrome（最新版）です。
 尚、パスワードに関しては、第三者に漏洩されないように、厳重に保管してください。
-
-何か問題がある場合は、研究室配属希望調査サイト内のお問い合わせフォームからお問い合わせください。
 
 ** 注意事項 **
 ・このメールは、研究室配属希望調査を経由して、自動的に送信されたメッセージになります。
 ・このメールに返信をしても、管理チームが確認することができません。
-・推奨ブラウザ以外（旧バージョン含む）でご利用になられると正常に表示および動作しない恐れがございます。
 
 ---------------
 同志社大学大学院 理工学研究科 情報工学専攻
@@ -159,14 +154,11 @@ exports.sendInqueries = functions.https.onCall(async (data, context) => {
 
 // ユーザにログイン情報を記載したメールを送信する
 exports.sendLoginDataBatch = functions.https.onCall(async (data, context) => {
-  const year = data.year
-  const begin = data.begin
-  const end = data.end
   const db = admin.firestore()
   const messages = []
 
   // ログイン権限があるユーザにのみ送信
-  const activeUsersByYear = await db.collection('users').where('year', '==', year).where('isActive', '==', true).get()
+  const activeUsersByYear = await db.collection('users').where('year', '==', data).where('isActive', '==', true).get()
   activeUsersByYear.forEach((user) => {
     // eslint-disable-next-line
     const pass = decryptPassword(user.data().password)
@@ -181,8 +173,6 @@ exports.sendLoginDataBatch = functions.https.onCall(async (data, context) => {
       email: user.data().email,
       name: user.data().name,
       status: entry,
-      beginDate: begin,
-      endDate: end,
       password: pass,
     }
 
@@ -206,8 +196,6 @@ exports.sendLoginDataBatch = functions.https.onCall(async (data, context) => {
 
 // 個人ユーザにログイン情報を記載したメールを送信する
 exports.sendPersonLoginDataBatch = functions.https.onCall(async (data, context) => {
-  const begin = data.begin
-  const end = data.end
   const db = admin.firestore()
   const messages = []
 
@@ -227,15 +215,12 @@ exports.sendPersonLoginDataBatch = functions.https.onCall(async (data, context) 
         email: user.data().email,
         name: user.data().name,
         status: entry,
-        beginDate: begin,
-        endDate: end,
         password: pass,
       }
 
       messages.push({
         to: user.data().email,
-        from: mokuboEmail,
-        cc: mokuboEmail,
+        from: gmailEmail,
         subject: '【研究室配属希望調査】ログイン情報について',
         text: userLoginDataMail(userData),
       })
