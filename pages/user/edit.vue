@@ -64,11 +64,13 @@
 
       <CardButton :title="btnTitle" :icon="btnIcon" :submit="postPoints" />
     </v-card>
+    <SaveDialog :open="saveConfirm" @close="close" />
   </v-row>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { SaveDialog } from '~/components/layouts/index'
 import { CardTitle, CardButton } from '~/components/card/index'
 
 export default {
@@ -76,6 +78,7 @@ export default {
   components: {
     CardTitle,
     CardButton,
+    SaveDialog,
   },
   data() {
     return {
@@ -98,6 +101,7 @@ export default {
       },
       selected: '',
       selectItems: ['希望しない', '希望する'],
+      saveConfirm: false,
     }
   },
   computed: {
@@ -192,7 +196,7 @@ export default {
           point: points,
           isGraduate: selected,
         })
-        this.$router.push('/user')
+        this.saveConfirm = true
       } else {
         window.scrollTo(0, 0)
       }
@@ -211,6 +215,10 @@ export default {
         const re = new RegExp('^([0-9]|[1-8][0-9]|[9][0-' + String(num) + '])$')
         return re.test(value)
       }
+    },
+    close() {
+      this.saveConfirm = false
+      this.$router.push('/user')
     },
   },
 }
