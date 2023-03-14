@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       validate: false,
-      title: '研究室希望配属調査',
+      title: '研究室配属希望調査',
       subtitle: 'ご自身のメールアドレスと配布されたパスワードを入力してください',
       email: '',
       emailRules: {

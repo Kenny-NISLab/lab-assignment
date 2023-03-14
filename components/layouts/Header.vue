@@ -2,7 +2,7 @@
   <v-app-bar app dark color="primary" class="elevation-0">
     <v-app-bar-nav-icon class="appbar__icon" @click="toggle" />
     <v-toolbar-title class="toolbar__title">
-      <NuxtLink to="/" class="toolbar__text">研究室希望配属調査</NuxtLink>
+      <NuxtLink to="/" class="toolbar__text">研究室配属希望調査</NuxtLink>
     </v-toolbar-title>
 
     <v-tabs v-if="isLoggined" class="appbar__tabs">
